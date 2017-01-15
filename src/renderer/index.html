@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title data-bind="text: title"></title>
+    <link rel="stylesheet" href="../style/index.css">
+</head>
+
+<body data-bind="event: {keydown: ev, focus: bodyFocused}">
+    <div class="window">
+        <header class="toolbar toolbar-header">
+          <h1 class="title"></h1>
+            <div class="btn-group">
+                <button class="btn btn-default btn-mini" onClick="clickClose()" title="Window Close">
+                <span class="fa fa-window-close"></span>
+                </button>
+                <button class="btn btn-default btn-mini" onClick="clickMinimize()" title="Window Minimize">
+                  <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-default btn-mini" onClick="clickMaximize()" title="Window Maximize">
+                  <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                </button>
+            </div>
+            <button class="btn btn-default" onClick="clickReload()" title="Python View Reload"><i class="fa fa-repeat fa-fw" aria-hidden="true"></i>Reload</button>
+            <button class="btn btn-default" onClick="clickPyRestart()" title="Python Restart"><i class="fa fa-repeat fa-fw" aria-hidden="true"></i>Python Restart</button>
+
+
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" onClick="clickRenderDevTools()" title="Toggle Render DevTools"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+Renderer Process DevTools</button>
+                <button class="btn btn-default" onClick="clickPythonDevTools()" title="Toggle Python View DevTools"><i class="fa fa-arrow-down" aria-hidden="true"></i>
+Python View DevTools</button>
+            </div>
+        </header>
+        <div class="window-content">
+            <webview id="view01" class="wv window" src="http://localhost:5000/" disablewebsecurity></webview>
+        </div>
+        <footer class="toolbar toolbar-footer">
+            <h1 class="title"></h1>
+        </footer>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+
+    <link rel="stylesheet" href="static/pure.min.css">
+    <script src="static/riot+compiler.min.js"></script>
+    <script src="static/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="main">
+      <div class="content">
+        <p>
+          <h2 class="content-subhead">Basic</h2>
+          <my-getconfig label="Python Path:" url="/api/v1/config/pypath"></my-getconfig>
+          <my-getconfig label="Python Version:" url="/api/v1/config/version"></my-getconfig>
+          <my-getconfig label="Python Datetime:" url="/api/v1/config/datetime"></my-getconfig>
+          <my-getconfig label="Python Date:" url="/api/v1/config/date"></my-getconfig>
+          <my-getconfig label="Python Time:" url="/api/v1/config/time"></my-getconfig>
+        </p>
+        <p>
+          <h2 class="content-subhead">Modules</h2>
+          <my-getmodule label="Scipy:" url="/api/v1/module/scipy"></my-getmodule>
+          <my-getmodule label="Numpy:" url="/api/v1/module/numpy"></my-getmodule>
+          <my-getmodule label="Matplotlib:" url="/api/v1/module/matplotlib"></my-getmodule>
+          <my-getmodule label="Pandas:" url="/api/v1/module/pandas"></my-getmodule>
+        </p>
+      </div>
+    </div>
+
+    <script type="riot/tag">
+        <my-getconfig>
+          <form class="pure-form pure-form-aligned">
+            <fieldset>
+              <div class="pure-control-group pure-g">
+                <label class="pure-u-1-4">{ opts.label }</label>
+                <input class="pure-u-3-4" type="text" placeholder={ opts.label } value={ value } readonly>
+              </div>
+            </fieldset>
+          </form>
+
+            let self = this;
+            self.value = "Now Loading...";
+            console.log(opts.label + " : " + opts.url);
+            axios.get( opts.url, {responseType: 'json'} )
+            .then( response => {
+              console.log(response);
+              return response.data;
+            })
+            .then( json => {
+              self.value = json["value"];
+              self.update(); } )
+            .catch( error => {
+              self.value = "Load Missing..";
+              console.log("Catch axios get error");
+            });
+
+        </my-getconfig>
+    </script>
+
+    <script type="riot/tag">
+      <my-getmodule>
+        <form class="pure-form pure-form-aligned">
+          <fieldset>
+            <div class="pure-control-group pure-g">
+              <label class="pure-u-1-4">{ opts.label }</label>
+              <input class="pure-u-3-4" type="text" placeholder={ opts.label } value={ value } readonly>
+            </div>
+          </fieldset>
+        </form>
+
+          let self = this;
+          self.value = "Now Loading...";
+          console.log(opts.label + " : " + opts.url);
+          axios.get( opts.url, {responseType: 'json'} )
+          .then( response => {
+            console.log(response);
+            return response.data;
+          })
+          .then( json => {
+            console.log(json["code"])
+            if(json["code"] == "200") {
+              self.value = "Version " + json["version"] + " - Module Aveilable."
+            } else {
+              self.value = "Module Not Found"
+            }
+            self.update(); } )
+          .catch( error => {
+            self.value = "Load Missing..";
+            console.log("Catch axios get error");
+          });
+
+      </my-getmodule>
+    </script>
+
+    <script src="static/index.js"></script>
+    <script>
+        riot.mount('*')
+    </script>
+    <style>
+        .main {
+            padding: 1em;
+            color: black;
+        }
+    </style>
+</body>
+
+</html>
