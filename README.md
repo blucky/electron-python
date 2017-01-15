@@ -37,3 +37,10 @@ npm run build
   │  └ Flask (server localhost:5000) /
   │    └ flask-restful API (localhost:5000/api/v1/)
 ```
+
+
+## Capture Image
+![Capture Image](https://blucky.github.io/electron-python/image/capture01.png)
+
+## Process Image
+![Process Image](https://blucky.github.io/electron-python/image/image01.png)
